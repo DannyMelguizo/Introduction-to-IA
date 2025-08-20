@@ -12,24 +12,27 @@ class Node: #definición de clase node
     
 def expand(problem, node):
     
-    children = problem.actions(node.state)
+    children = []
 
-    cost_min = float('inf')
+    for child in problem.actions(node.state):
 
-    for child in children:
-        if problem.action_cost(node.state, child, '') < cost_min:
-            cost_min = problem.action_cost(node.state, child, '')
+        cost_action = node.path_cost + problem.action_cost(node.state, child, node)
 
-    print(cost_min)
+        child = Node(child, node, None, cost_action)
+
+        children.append(child)
+    
+    return children
 
 class Problem: #DEFINICION DEL PROBLEMA
-    def __init__(self, initial, goal, actions, result, action_cost, is_goal):
+    def __init__(self, initial, goal, actions, result, action_cost, is_goal, heuristic):
         self.initial = initial #Estado inicial
         self.goal = goal #Estado objetivo
         self.actions = actions #acciones disponibles desde un estado.
         self.result = result  #estado resultante de aplicar una acción
         self.action_cost = action_cost #costo de una acción
         self.is_goal = is_goal #verificación de si el estado es el estado objetivo
+        self.heuristic = heuristic #heuristica de un nodo
 
 def best_first_search(problem, f):
     node = Node(state=problem.initial) #Crea el nodo raíz con el estado inicial del problema.
@@ -60,7 +63,7 @@ def is_goal(state):
     return state == goal
 
 def f(node):
-    return node.path_cost #costo del camino desde el estado inicial hasta el nodo actual.
+    return node.path_cost + problem.heuristic(node.state) #costo del camino desde el estado inicial hasta el nodo actual.
 
 initial = 'Arad'
 goal = 'Bucharest'
@@ -82,6 +85,21 @@ actions = {
     'Bucharest': ['Fagaras', 'Pitesti']
 }
 
+heuristic = {
+    'Arad': 366,
+    'Bucharest': 0,
+    'Craiova': 160,
+    'Drobeta': 242,
+    'Fagaras': 176,
+    'Lugoj': 244,
+    'Mehadia': 241,
+    'Oradea': 380,
+    'Pitesti': 100,
+    'Rimnicu Vileea': 193,
+    'Sibiu': 253,
+    'Timisoara': 329,
+    'Zerind': 374
+}
 
 action_costs = {
     # Completar con los costos de las acciones
@@ -119,7 +137,7 @@ action_costs = {
     ('Bucharest', 'Fagaras'): 211,
 }
 
-problem = Problem(initial, goal, lambda s: actions.get(s, []), result, action_cost, is_goal)
+problem = Problem(initial, goal, lambda s: actions.get(s, []), result, action_cost, is_goal, lambda s: heuristic.get(s, []))
 solution = best_first_search(problem, f)#Resultado del algoritmo best_first_search aplicado al problema definido.
 
 if solution:
