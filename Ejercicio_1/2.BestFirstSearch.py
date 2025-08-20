@@ -62,8 +62,9 @@ def action_cost(state, action, result):
 def is_goal(state):
     return state == goal
 
+# f(n) = g(n) + h(n)
 def f(node):
-    return node.path_cost + problem.heuristic(node.state) #costo del camino desde el estado inicial hasta el nodo actual.
+    return node.path_cost + problem.heuristic(node.state) #costo del camino desde el estado inicial hasta el nodo actual mas la heuristica del nodo.
 
 initial = 'Arad'
 goal = 'Bucharest'
