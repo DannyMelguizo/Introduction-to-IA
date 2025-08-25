@@ -7,4 +7,4 @@ No, si se cambian los diferentes costos que tienen las diferentes casillas, el a
 Si el laberinto cuenta con multiples salidas, se tendria que modificar el algoritmo para que basandonos en el punto de entrada o de inicio, al calcular la heuristica de los nodos cercanos, dirigirnos hacia la salida mas cercana.
 
 ## 4. Modifica el laberinto por uno más grande y con otro tipo de obstáculo además de paredes. ¿Qué limitación encuentras en el algoritmo? 
-Le cuesta mas recursos (tiempo y memoria) alcanzar la salida, en caso tal de agregar un obstaculo, dependeria de si funcionase como muro y si bloquease un camino esencial
+Le cuesta mas recursos (tiempo y memoria) alcanzar la salida, en caso tal de agregar un obstaculo, afectaria dependiendo de en donde se encuentre el obstaculo, es decir, que no este bloqueando un camino esencial o necesario para alcanzar la salida.
